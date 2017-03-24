@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasDispatchingActivityInjector;
+import hu.bme.aut.student.bookreview.inject.ApplicationModule;
 import hu.bme.aut.student.bookreview.inject.DaggerApplicationComponent;
 
 /**
@@ -22,7 +23,10 @@ public class BookReviewApplication extends Application implements HasDispatching
     @Override
     public void onCreate() {
         super.onCreate();
-        DaggerApplicationComponent.create().inject(this);
+        DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
