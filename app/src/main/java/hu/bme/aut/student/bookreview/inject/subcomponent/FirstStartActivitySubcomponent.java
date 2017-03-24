@@ -2,7 +2,7 @@ package hu.bme.aut.student.bookreview.inject.subcomponent;
 
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
-import hu.bme.aut.student.bookreview.firststart.FirstStartActivity;
+import hu.bme.aut.student.bookreview.ui.firststart.FirstStartActivity;
 
 /**
  * Component which provides the modules for the first activity.

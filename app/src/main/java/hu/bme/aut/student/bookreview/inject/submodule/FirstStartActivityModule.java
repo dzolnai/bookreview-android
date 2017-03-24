@@ -1,14 +1,13 @@
 package hu.bme.aut.student.bookreview.inject.submodule;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjector;
 import dagger.multibindings.IntoMap;
-import hu.bme.aut.student.bookreview.firststart.FirstStartActivity;
+import hu.bme.aut.student.bookreview.ui.firststart.FirstStartActivity;
 import hu.bme.aut.student.bookreview.inject.subcomponent.FirstStartActivitySubcomponent;
 
 /**
