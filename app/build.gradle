@@ -11,6 +11,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -19,12 +24,15 @@ android {
     }
 }
 
-def supportLibVersion = "25.3.0"
+def supportLibVersion = "25.3.1"
 def daggerVersion = "2.10"
 def butterknifeVersion = "8.5.1"
 
 dependencies {
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:palette-v7:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
 
     compile "com.google.dagger:dagger:${daggerVersion}"
     compile "com.google.dagger:dagger-android:${daggerVersion}"
@@ -33,4 +41,6 @@ dependencies {
 
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+
+    compile 'com.github.satyan:sugar:1.5'
 }

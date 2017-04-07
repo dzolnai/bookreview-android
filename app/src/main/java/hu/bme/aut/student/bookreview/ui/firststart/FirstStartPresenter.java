@@ -1,7 +1,7 @@
 package hu.bme.aut.student.bookreview.ui.firststart;
 
 import hu.bme.aut.student.bookreview.model.service.SettingsService;
-import hu.bme.aut.student.bookreview.ui.Presenter;
+import hu.bme.aut.student.bookreview.ui.base.Presenter;
 
 /**
  * Presenter for the @{#link {@link FirstStartActivity}.
@@ -20,7 +20,7 @@ public class FirstStartPresenter extends Presenter<FirstStartScreen> {
     public void attachScreen(FirstStartScreen screen) {
         super.attachScreen(screen);
         if (_settingsService.getUsername() != null) {
-            screen.continueToMainScreen();
+            screen.continueToHomeScreen();
         } else {
             screen.promptUsernameInput();
         }
