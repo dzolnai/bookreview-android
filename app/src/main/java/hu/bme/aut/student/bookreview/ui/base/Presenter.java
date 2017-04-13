@@ -1,4 +1,4 @@
-package hu.bme.aut.student.bookreview.ui;
+package hu.bme.aut.student.bookreview.ui.base;
 
 import android.support.annotation.CallSuper;
 

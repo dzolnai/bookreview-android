@@ -11,7 +11,8 @@ import dagger.android.AndroidInjectionModule;
  * <p>
  * Created by Daniel Zolnai on 2017-03-24.
  */
-@Module(includes = {AndroidInjectionModule.class, ServiceModule.class, PresenterModule.class})
+@Module(includes = { AndroidInjectionModule.class, ServiceModule.class,
+        PresenterModule.class, RepositoryModule.class })
 public class ApplicationModule {
 
     private final Context _applicationContext;

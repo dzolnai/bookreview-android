@@ -4,4 +4,5 @@
     <string name="dialog_username_input_username_hint">Username</string>
     <string name="dialog_username_input_description">To start using the app, you need to select a username.</string>
     <string name="dialog_username_input_start_button">START</string>
+    <string name="title_home">Available books</string>
 </resources>

@@ -9,6 +9,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasDispatchingActivityInjector;
 import hu.bme.aut.student.bookreview.inject.ApplicationModule;
 import hu.bme.aut.student.bookreview.inject.DaggerApplicationComponent;
+import hu.bme.aut.student.bookreview.model.repository.Repository;
 
 /**
  * Main application.
@@ -18,7 +19,10 @@ import hu.bme.aut.student.bookreview.inject.DaggerApplicationComponent;
 public class BookReviewApplication extends Application implements HasDispatchingActivityInjector {
 
     @Inject
-    DispatchingAndroidInjector<Activity> _dispatchingAndroidInjector;
+    protected DispatchingAndroidInjector<Activity> _dispatchingAndroidInjector;
+
+    @Inject
+    protected Repository _repository;
 
     @Override
     public void onCreate() {
@@ -27,6 +31,7 @@ public class BookReviewApplication extends Application implements HasDispatching
                 .applicationModule(new ApplicationModule(this))
                 .build()
                 .inject(this);
+        _repository.open(this);
     }
 
     @Override

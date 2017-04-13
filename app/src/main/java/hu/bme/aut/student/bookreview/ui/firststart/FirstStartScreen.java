@@ -8,5 +8,5 @@ package hu.bme.aut.student.bookreview.ui.firststart;
 public interface FirstStartScreen {
     void promptUsernameInput();
 
-    void continueToMainScreen();
+    void continueToHomeScreen();
 }
