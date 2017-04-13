@@ -16,6 +16,6 @@ public abstract class BaseViewHolder<T extends ViewDataBinding> extends Recycler
 
     public BaseViewHolder(View itemView) {
         super(itemView);
-        _binding = DataBindingUtil.findBinding(itemView);
+        _binding = DataBindingUtil.getBinding(itemView);
     }
 }

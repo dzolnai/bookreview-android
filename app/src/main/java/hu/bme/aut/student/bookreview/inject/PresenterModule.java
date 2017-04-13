@@ -2,8 +2,10 @@ package hu.bme.aut.student.bookreview.inject;
 
 import dagger.Module;
 import dagger.Provides;
+import hu.bme.aut.student.bookreview.model.repository.Repository;
 import hu.bme.aut.student.bookreview.model.service.SettingsService;
 import hu.bme.aut.student.bookreview.ui.firststart.FirstStartPresenter;
+import hu.bme.aut.student.bookreview.ui.home.HomePresenter;
 
 /**
  * Module which provides the presenters.
@@ -16,5 +18,10 @@ public class PresenterModule {
     @Provides
     /* package */ FirstStartPresenter provideFirstStartPresenter(SettingsService settingsService) {
         return new FirstStartPresenter(settingsService);
+    }
+
+    @Provides
+    /* package */ HomePresenter provideHomePresenter(Repository repository) {
+        return new HomePresenter(repository);
     }
 }

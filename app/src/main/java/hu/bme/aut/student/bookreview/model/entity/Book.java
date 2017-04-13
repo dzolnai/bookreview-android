@@ -24,7 +24,7 @@ public class Book {
         // Used by ORM.
     }
 
-    public Book(Builder builder) {
+    private Book(Builder builder) {
         _id = builder._id;
         _title = builder._title;
         _author = builder._author;
@@ -72,7 +72,7 @@ public class Book {
         _imageUrl = imageUrl;
     }
 
-    public class Builder {
+    public static class Builder {
         private String _id;
         private String _title;
         private String _author;

@@ -1,15 +1,31 @@
 package hu.bme.aut.student.bookreview.ui.adapter.viewholder;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Dani on 2017-04-07.
- */
+import com.squareup.picasso.Picasso;
 
-public class BookViewHolder extends BaseViewHolder {
+import hu.bme.aut.student.bookreview.databinding.ItemBookBinding;
+import hu.bme.aut.student.bookreview.model.entity.Book;
+import hu.bme.aut.student.bookreview.util.PaletteTransformation;
+
+/**
+ * Book view holder
+ * Created by Daniel Zolnai on 2017-04-07.
+ */
+public class BookViewHolder extends BaseViewHolder<ItemBookBinding> {
 
     public BookViewHolder(View itemView) {
         super(itemView);
     }
+
+    public void bind(Book book) {
+        _binding.bookTitle.setText(book.getTitle());
+        _binding.bookAuthor.setText(book.getAuthor());
+        Picasso.with(_binding.bookCover.getContext())
+                .load(book.getImageUrl())
+                .transform(new PaletteTransformation(_binding.bookBackground))
+                .into(_binding.bookCover);
+    }
+
+
 }
