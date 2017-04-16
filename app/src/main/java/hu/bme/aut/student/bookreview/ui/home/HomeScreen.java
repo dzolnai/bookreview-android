@@ -5,5 +5,5 @@ package hu.bme.aut.student.bookreview.ui.home;
  * Created by Daniel Zolnai on 2017-04-07.
  */
 public interface HomeScreen {
-    // TODO
+    void openAddBookPage();
 }

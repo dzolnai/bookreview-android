@@ -10,4 +10,10 @@
     <string name="submit_review">Submit</string>
     <string name="reviews_of_others">Reviews of others</string>
     <string name="book_published_at">Published: %d</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_author">Author</string>
+    <string name="hint_publish_year">Year published</string>
+    <string name="hint_image_url">Image URL</string>
+    <string name="add_book">Add book</string>
+    <string name="add_book_title">Add book</string>
 </resources>

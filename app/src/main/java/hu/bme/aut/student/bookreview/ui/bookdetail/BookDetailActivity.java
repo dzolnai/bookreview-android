@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.squareup.picasso.Picasso;
@@ -87,5 +88,15 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_book_detail;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
