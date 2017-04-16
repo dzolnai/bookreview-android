@@ -9,26 +9,25 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import hu.bme.aut.student.bookreview.R;
-import hu.bme.aut.student.bookreview.model.entity.Book;
-import hu.bme.aut.student.bookreview.ui.adapter.viewholder.BookViewHolder;
+import hu.bme.aut.student.bookreview.model.entity.Review;
+import hu.bme.aut.student.bookreview.ui.adapter.viewholder.ReviewViewHolder;
 import hu.bme.aut.student.bookreview.util.ItemClickListener;
 
 /**
- * Adapter for displaying books in a RecyclerView.
+ * Adapter for the review items.
  * <p>
- * Created by Daniel Zolnai on 2017-04-07.
+ * Created by Daniel Zolnai on 2017-04-16.
  */
-public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
 
     private LayoutInflater _layoutInflater;
-    private List<Book> _items;
+    private List<Review> _items;
+    private ItemClickListener<Review> _externalItemClickListener, _internalItemClickListener;
 
-    private ItemClickListener<Book> _externalItemClickListener, _internalItemClickListener;
-
-    public BookAdapter() {
-        _internalItemClickListener = new ItemClickListener<Book>() {
+    public ReviewAdapter() {
+        _internalItemClickListener = new ItemClickListener<Review>() {
             @Override
-            public void onItemClicked(Book item) {
+            public void onItemClicked(Review item) {
                 if (_externalItemClickListener != null) {
                     _externalItemClickListener.onItemClicked(item);
                 }
@@ -36,27 +35,26 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
         };
     }
 
-    public void setItemClickListener(ItemClickListener<Book> itemClickListener) {
-        _externalItemClickListener = itemClickListener;
-    }
-
-
-    public void setData(List<Book> items) {
+    public void setData(List<Review> items) {
         _items = items;
         notifyDataSetChanged();
     }
 
-    @Override
-    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (_layoutInflater == null) {
-            _layoutInflater = LayoutInflater.from(parent.getContext());
-        }
-        View view = DataBindingUtil.inflate(_layoutInflater, R.layout.item_book, parent, false).getRoot();
-        return new BookViewHolder(view);
+    public void setItemClickListener(ItemClickListener<Review> itemClickListener) {
+        _externalItemClickListener = itemClickListener;
     }
 
     @Override
-    public void onBindViewHolder(BookViewHolder holder, int position) {
+    public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (_layoutInflater == null) {
+            _layoutInflater = LayoutInflater.from(parent.getContext());
+        }
+        View view = DataBindingUtil.inflate(_layoutInflater, R.layout.item_review, parent, false).getRoot();
+        return new ReviewViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ReviewViewHolder holder, int position) {
         holder.bind(_items.get(position), _internalItemClickListener);
     }
 

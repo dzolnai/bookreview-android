@@ -25,4 +25,8 @@ public class FirstStartPresenter extends Presenter<FirstStartScreen> {
             screen.promptUsernameInput();
         }
     }
+
+    public void saveUsername(String username) {
+        _settingsService.setUsername(username);
+    }
 }

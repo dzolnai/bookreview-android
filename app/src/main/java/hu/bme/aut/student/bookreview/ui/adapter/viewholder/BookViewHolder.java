@@ -1,12 +1,17 @@
 package hu.bme.aut.student.bookreview.ui.adapter.viewholder;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v7.graphics.Palette;
 import android.view.View;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import hu.bme.aut.student.bookreview.databinding.ItemBookBinding;
 import hu.bme.aut.student.bookreview.model.entity.Book;
-import hu.bme.aut.student.bookreview.util.PaletteTransformation;
+import hu.bme.aut.student.bookreview.util.ItemClickListener;
 
 /**
  * Book view holder
@@ -18,13 +23,46 @@ public class BookViewHolder extends BaseViewHolder<ItemBookBinding> {
         super(itemView);
     }
 
-    public void bind(Book book) {
+    public void bind(final Book book, final ItemClickListener<Book> internalItemClickListener) {
         _binding.bookTitle.setText(book.getTitle());
         _binding.bookAuthor.setText(book.getAuthor());
+        _binding.bookBackground.setBackgroundColor(Color.BLACK);
+        Target target;
         Picasso.with(_binding.bookCover.getContext())
                 .load(book.getImageUrl())
-                .transform(new PaletteTransformation(_binding.bookBackground))
-                .into(_binding.bookCover);
+                .into(target = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        _binding.bookCover.setImageBitmap(bitmap);
+                        Palette.from(bitmap)
+                                .generate(new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+                                        if (_binding.bookBackground == null) {
+                                            return;
+                                        }
+                                        _binding.bookBackground.setBackgroundColor(palette.getDarkMutedColor(Color.BLACK));
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+        _binding.bookCover.setTag(target);
+        _binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                internalItemClickListener.onItemClicked(book);
+            }
+        });
     }
 
 

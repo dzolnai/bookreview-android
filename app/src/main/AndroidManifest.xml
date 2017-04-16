@@ -21,6 +21,10 @@
         </activity>
 
         <activity android:name=".ui.home.HomeActivity"/>
+
+        <activity android:name=".ui.bookdetail.BookDetailActivity"/>
+
+        <activity android:name=".ui.addbook.AddBookActivity"/>
     </application>
 
 </manifest>
