@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
+import hu.bme.aut.student.bookreview.model.entity.Review;
 
 /**
  * Repository interface for saving app data.
@@ -24,4 +25,10 @@ public interface Repository {
     void removeBook(Book book);
 
     boolean isInDb(Book book);
+
+    List<Review> getReviewsForBook(Book book);
+
+    void addReviewForBook(Book book, Review review);
+
+    Book getBookForId(String bookId);
 }

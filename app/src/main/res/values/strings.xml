@@ -5,4 +5,9 @@
     <string name="dialog_username_input_description">To start using the app, you need to select a username.</string>
     <string name="dialog_username_input_start_button">START</string>
     <string name="title_home">Available books</string>
+    <string name="add_your_review">Add review</string>
+    <string name="comments_on_book">Comments on book</string>
+    <string name="submit_review">Submit</string>
+    <string name="reviews_of_others">Reviews of others</string>
+    <string name="book_published_at">Published: %d</string>
 </resources>

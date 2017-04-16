@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
+import hu.bme.aut.student.bookreview.model.entity.Review;
 
 /**
  * Repository which saves the items with SugarORM.
@@ -57,5 +58,24 @@ public class SugarOrmRepository implements Repository {
     @Override
     public boolean isInDb(Book book) {
         return SugarRecord.findById(Book.class, new String[] { book.getId() }) != null;
+    }
+
+    @Override
+    public List<Review> getReviewsForBook(Book book) {
+        return SugarRecord.find(Review.class, "_bookId = ?", book.getId());
+    }
+
+    @Override
+    public void addReviewForBook(Book book, Review review) {
+        SugarRecord.save(review);
+    }
+
+    @Override
+    public Book getBookForId(String bookId) {
+        List<Book> result = SugarRecord.findById(Book.class, new String[] { bookId });
+        if (result != null && result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
     }
 }

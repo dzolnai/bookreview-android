@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nameAndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/review_text_color"
+                android:textSize="15sp"
+                tools:text="bookreviewer2017 - 2017.03.05"/>
+
+            <RatingBar
+                android:id="@+id/rating"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="2dp"
+                android:isIndicator="true"
+                tools:rating="4"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/review_text_color"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            tools:text="I really liked this book, although the ending is quite bizarre. Definitely not recommended for younger people."/>
+    </LinearLayout>
+</layout>

@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="lightGrey">#E0E0E0</color>
     <color name="textColor">#242424</color>
+    <color name="review_text_color">#707070</color>
 </resources>
