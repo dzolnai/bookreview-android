@@ -50,7 +50,8 @@ public class FirstStartActivity extends BaseActivity<ActivityFirstStartBinding> 
             @Override
             public void onUsernameSelected(Dialog dialog, String username) {
                 Toast.makeText(FirstStartActivity.this, "Selected username: " + username, Toast.LENGTH_LONG).show();
-                // TODO check and save.
+                // TODO check
+                _presenter.saveUsername(username);
                 dialog.dismiss();
                 continueToHomeScreen();
             }

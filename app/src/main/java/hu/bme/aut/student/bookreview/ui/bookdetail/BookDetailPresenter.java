@@ -5,6 +5,7 @@ import java.util.List;
 import hu.bme.aut.student.bookreview.model.entity.Book;
 import hu.bme.aut.student.bookreview.model.entity.Review;
 import hu.bme.aut.student.bookreview.model.repository.Repository;
+import hu.bme.aut.student.bookreview.model.service.SettingsService;
 import hu.bme.aut.student.bookreview.ui.base.Presenter;
 
 /**
@@ -14,9 +15,11 @@ import hu.bme.aut.student.bookreview.ui.base.Presenter;
  */
 public class BookDetailPresenter extends Presenter<BookDetailScreen> {
     private Repository _repository;
+    private SettingsService _settingsService;
 
-    public BookDetailPresenter(Repository repository) {
+    public BookDetailPresenter(SettingsService settingsService, Repository repository) {
         _repository = repository;
+        _settingsService = settingsService;
     }
 
     public Book getBookForId(String bookId) {
@@ -32,4 +35,8 @@ public class BookDetailPresenter extends Presenter<BookDetailScreen> {
     }
 
 
+    public void submitReview(Book book, Integer rating, String comment) {
+        Review review = new Review(_settingsService.getUsername(), book.getId(), rating, comment);
+        _repository.addReviewForBook(book, review);
+    }
 }

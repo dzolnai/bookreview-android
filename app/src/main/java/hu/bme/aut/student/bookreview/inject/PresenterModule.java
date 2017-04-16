@@ -27,7 +27,7 @@ public class PresenterModule {
     }
 
     @Provides
-    /* package */ BookDetailPresenter provideBookDetailPresenter(Repository repository) {
-        return new BookDetailPresenter(repository);
+    /* package */ BookDetailPresenter provideBookDetailPresenter(SettingsService settingsService, Repository repository) {
+        return new BookDetailPresenter(settingsService, repository);
     }
 }

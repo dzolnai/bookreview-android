@@ -1,12 +1,11 @@
 package hu.bme.aut.student.bookreview.inject;
 
-import android.content.Context;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import hu.bme.aut.student.bookreview.model.repository.MemoryRepository;
 import hu.bme.aut.student.bookreview.model.repository.Repository;
-import hu.bme.aut.student.bookreview.model.repository.SugarOrmRepository;
-import hu.bme.aut.student.bookreview.model.service.SettingsService;
 
 /**
  * Module which provides the services.
@@ -17,7 +16,8 @@ import hu.bme.aut.student.bookreview.model.service.SettingsService;
 public class RepositoryModule {
 
     @Provides
+    @Singleton
     /* package */ Repository provideRepository() {
-        return new SugarOrmRepository();
+        return new MemoryRepository();
     }
 }

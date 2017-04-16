@@ -3,14 +3,15 @@ package hu.bme.aut.student.bookreview.ui.bookdetail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
 import hu.bme.aut.student.bookreview.R;
 import hu.bme.aut.student.bookreview.databinding.ActivityBookDetailBinding;
 import hu.bme.aut.student.bookreview.model.entity.Book;
@@ -38,17 +39,41 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AndroidInjection.inject(this);
         String bookId = getIntent().getStringExtra(KEY_BOOK_ID);
         _book = _presenter.getBookForId(bookId);
+        _initToolbar();
         _initView();
         _updateView();
+    }
+
+    private void _initToolbar() {
+        setSupportActionBar(_binding.toolbar);
+        setTitle(_book.getTitle());
+        if (getSupportActionBar() == null) {
+            return;
+        }
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void _initView() {
         _binding.otherReviewsList.setAdapter(new ReviewAdapter());
         _binding.otherReviewsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        _binding.bookReviewSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer rating = Math.round(_binding.userRating.getRating());
+                String comment = _binding.bookReviewComment.getText().toString();
+                _presenter.submitReview(_book, rating, comment);
+                _binding.bookReviewComment.setText("");
+                _binding.userRating.setRating(0);
+                _updateView();
+            }
+        });
     }
 
     private void _updateView() {

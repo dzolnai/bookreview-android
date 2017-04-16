@@ -12,6 +12,8 @@ public class SettingsService {
 
     private static final String KEY_SETTINGS_PREFERENCES = "settings_preferences";
 
+    private static final String KEY_USERNAME = "key_username";
+
     private Context _applicationContext;
 
     private String _username;
@@ -22,11 +24,12 @@ public class SettingsService {
     }
 
     private void _save() {
-        // TODO
+        _getSharedPreferences().edit().putString(KEY_USERNAME, _username).apply();
     }
 
     private void _load() {
-        // TODO
+        SharedPreferences preferences = _getSharedPreferences();
+        _username = preferences.getString(KEY_USERNAME, null);
     }
 
     private SharedPreferences _getSharedPreferences() {

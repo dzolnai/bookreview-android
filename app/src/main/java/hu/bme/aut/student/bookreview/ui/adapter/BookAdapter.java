@@ -10,7 +10,6 @@ import java.util.List;
 
 import hu.bme.aut.student.bookreview.R;
 import hu.bme.aut.student.bookreview.model.entity.Book;
-import hu.bme.aut.student.bookreview.model.entity.Review;
 import hu.bme.aut.student.bookreview.ui.adapter.viewholder.BookViewHolder;
 import hu.bme.aut.student.bookreview.util.ItemClickListener;
 
@@ -35,6 +34,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
                 }
             }
         };
+    }
+
+    public void setItemClickListener(ItemClickListener<Book> itemClickListener) {
+        _externalItemClickListener = itemClickListener;
     }
 
 
