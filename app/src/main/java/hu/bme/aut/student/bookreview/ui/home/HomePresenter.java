@@ -2,6 +2,7 @@ package hu.bme.aut.student.bookreview.ui.home;
 
 import android.content.Context;
 
+import java.util.Iterator;
 import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
@@ -27,5 +28,22 @@ public class HomePresenter extends Presenter<HomeScreen> {
 
     public void openBookDetailScreen(Context context, Book book) {
         context.startActivity(BookDetailActivity.newInstance(context, book));
+    }
+
+    public boolean search(String newText) {
+        List<Book> allBooks = getAllBooks();
+        Iterator<Book> listIterator = allBooks.iterator();
+        while (listIterator.hasNext()) {
+            Book book = listIterator.next();
+            if (book.getTitle().toLowerCase().contains(newText.toLowerCase())) {
+                continue;
+            }
+            if (book.getAuthor().toLowerCase().contains(newText.toLowerCase())) {
+                continue;
+            }
+            listIterator.remove();
+        }
+        _screen.displayBooks(allBooks);
+        return false;
     }
 }

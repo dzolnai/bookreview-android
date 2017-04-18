@@ -1,10 +1,18 @@
 package hu.bme.aut.student.bookreview.ui.home;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,7 +30,7 @@ import hu.bme.aut.student.bookreview.util.ItemClickListener;
  * Activity which displays the list of books.
  * Created by Daniel Zolnai on 2017-04-07.
  */
-public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements HomeScreen {
+public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements HomeScreen, SearchView.OnQueryTextListener {
 
     @Inject
     protected HomePresenter _presenter;
@@ -85,5 +93,35 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements H
     @Override
     public void openAddBookPage() {
         startActivity(new Intent(this, AddBookActivity.class));
+    }
+
+    @Override
+    public void displayBooks(List<Book> allBooks) {
+        ((BookAdapter)_binding.list.getAdapter()).setData(allBooks);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.options_menu_main_search));
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by defaultreturn true;
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return _presenter.search(newText);
     }
 }
