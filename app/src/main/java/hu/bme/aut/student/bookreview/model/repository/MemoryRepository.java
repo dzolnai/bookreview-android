@@ -32,7 +32,7 @@ public class MemoryRepository implements Repository {
 
     @Override
     public List<Book> getAllBooks() {
-        return _books;
+        return new ArrayList<>(_books);
     }
 
     @Override

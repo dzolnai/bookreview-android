@@ -1,6 +1,7 @@
 package hu.bme.aut.student.bookreview.ui.adapter;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,9 +42,33 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     }
 
 
-    public void setData(List<Book> items) {
+    public void setData(final List<Book> items) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                if (_items == null) {
+                    return 0;
+                }
+                return _items.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return items.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return _items.get(oldItemPosition).getId().equals(items.get(newItemPosition).getId());
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return _items.get(oldItemPosition).getId().equals(items.get(newItemPosition).getId());
+            }
+        });
         _items = items;
-        notifyDataSetChanged();
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @Override

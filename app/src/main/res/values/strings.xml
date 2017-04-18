@@ -16,4 +16,6 @@
     <string name="hint_image_url">Image URL</string>
     <string name="add_book">Add book</string>
     <string name="add_book_title">Add book</string>
+    <string name="search_hint">Search for a book</string>
+    <string name="app_label">BookReview</string>
 </resources>
