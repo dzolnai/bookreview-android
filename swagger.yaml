@@ -1,0 +1,234 @@
+swagger: '2.0'
+info:
+  title: BookReview API
+  description: API for retrieving the book information for the BookReview application.
+  version: 1.0.0
+host: api.bookreview.example
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /user/check:
+    get:
+      summary: Checks if a username is already in use
+      description: >
+        Sends the requested username to the backend to check if a username is
+        already in use.
+      tags:
+        - Users
+      parameters:
+        - name: username
+          in: query
+          description: The requested username
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The username is available
+        '409':
+          description: The username is already in use by someone else
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /books:
+    get:
+      summary: Get a list of all books
+      description: |
+        The /books returns a list of all the books defined in the API.
+      tags:
+        - Books
+      responses:
+        '200':
+          description: An array of books
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Add a new book
+      description: |
+        Adds a new book to the list of all books
+      tags:
+        - Books
+      responses:
+        '201':
+          description: Empty response.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/books/{id}':
+    get:
+      summary: Get the info of a specific book
+      description: |
+        This endpoint returns the data of a single book, with the given ID.
+      tags:
+        - Books
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A single book
+          schema:
+            $ref: '#/definitions/Book'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update the data of a specific book.
+      description: |
+        This endpoint updates the book with the given ID with the new data.
+      tags:
+        - Books
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: The new data for the given book.
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '200':
+          description: The book was deleted.
+        '404':
+          description: The book to be deleted was not found.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a specific book.
+      description: |
+        This endpoint deletes the book with the given ID from the backend.
+      tags:
+        - Books
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The book was deleted.
+        '404':
+          description: The book to be deleted was not found.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/books/{id}/reviews':
+    get:
+      summary: Get all the reviews for a single book.
+      description: |
+        This endpoint returns all the reviews for a given book.
+      tags:
+        - Reviews
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A list of all reviews for this book.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Post a new review.
+      description: |
+        Post a new review for the book with the given ID.
+      tags:
+        - Reviews
+      parameters:
+        - in: body
+          name: body
+          description: The data for the new review.
+          required: true
+          schema:
+            $ref: '#/definitions/Review'
+      responses:
+        '200':
+          description: The review has been posted.
+        '404':
+          description: The book the review would be posted to was not found.
+        '409':
+          description: The user already posted a review for this book.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Book:
+    type: object
+    properties:
+      id:
+        type: string
+        description: >-
+          Unique identifier representing a specific book. This ID is generated
+          on the client side.
+      title:
+        type: string
+        description: 'The title of the book. For example, Metamorphosis.'
+      author:
+        type: string
+        description: 'The author of the book. For example, Franz Kafka.'
+      publishYear:
+        type: integer
+        description: 'The year the book was published in. For example, 1954.'
+      imageUrl:
+        type: string
+        description: Image URL representing the cover of the book.
+  Review:
+    type: object
+    properties:
+      username:
+        type: string
+        description: The name of the user posting the review.
+      bookId:
+        type: string
+        description: The ID of the book.
+      publishedAt:
+        type: integer
+        format: int64
+        description: Linux timestamp in UTC timezone when the review has been created.
+      rating:
+        type: integer
+        description: A rating from 1 to 5 based on how much the user liked the book.
+      comment:
+        type: string
+        description: Additional textual comments for the review.
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
