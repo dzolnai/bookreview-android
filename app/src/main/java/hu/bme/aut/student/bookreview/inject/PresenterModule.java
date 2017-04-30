@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import hu.bme.aut.student.bookreview.api.BooksApi;
 import hu.bme.aut.student.bookreview.api.ReviewsApi;
+import hu.bme.aut.student.bookreview.api.UsersApi;
 import hu.bme.aut.student.bookreview.model.repository.Repository;
 import hu.bme.aut.student.bookreview.model.service.SettingsService;
 import hu.bme.aut.student.bookreview.ui.adapter.BookAdapter;
@@ -21,13 +22,13 @@ import hu.bme.aut.student.bookreview.ui.home.HomePresenter;
 public class PresenterModule {
 
     @Provides
-    /* package */ FirstStartPresenter provideFirstStartPresenter(SettingsService settingsService) {
-        return new FirstStartPresenter(settingsService);
+    /* package */ FirstStartPresenter provideFirstStartPresenter(SettingsService settingsService, UsersApi usersApi) {
+        return new FirstStartPresenter(settingsService, usersApi);
     }
 
     @Provides
-    /* package */ HomePresenter provideHomePresenter(Repository repository) {
-        return new HomePresenter(repository);
+    /* package */ HomePresenter provideHomePresenter(BooksApi booksApi) {
+        return new HomePresenter(booksApi);
     }
 
     @Provides

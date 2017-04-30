@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Random;
 
 import hu.bme.aut.student.bookreview.config.NetworkConfig;
 import hu.bme.aut.student.bookreview.model.repository.Repository;
@@ -41,6 +42,13 @@ public class MockInterceptor implements Interceptor {
         Log.d("Mock HTTP client", "URL call: " + uri.toString());
         Headers headers = request.headers();
 
+        // A random delay for simulating calls :)
+        try {
+            Thread.sleep(new Random().nextInt(500));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "books") && uri.getPath().endsWith("/reviews")) {
             return _reviewsMock.process(request);
         } else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "books")) {
@@ -48,7 +56,6 @@ public class MockInterceptor implements Interceptor {
         } else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "users")) {
             return _usersMock.process(request);
         }
-
         return makeResponse(request, headers, 404, "Unknown");
 
     }
