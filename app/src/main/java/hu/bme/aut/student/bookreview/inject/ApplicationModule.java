@@ -5,6 +5,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import dagger.android.AndroidInjectionModule;
+import hu.bme.aut.student.bookreview.mock.MockNetworkModule;
 
 /**
  * Application module.
@@ -12,7 +13,7 @@ import dagger.android.AndroidInjectionModule;
  * Created by Daniel Zolnai on 2017-03-24.
  */
 @Module(includes = { AndroidInjectionModule.class, ServiceModule.class,
-        PresenterModule.class, RepositoryModule.class })
+        PresenterModule.class, RepositoryModule.class, MockNetworkModule.class })
 public class ApplicationModule {
 
     private final Context _applicationContext;

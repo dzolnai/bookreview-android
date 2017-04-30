@@ -4,6 +4,7 @@ import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
 import hu.bme.aut.student.bookreview.model.entity.Review;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,11 +17,11 @@ public interface ReviewsApi {
    * Get all the reviews for a single book.
    * This endpoint returns all the reviews for a given book.
    * @param id The ID of the book.
-   * @return Call<List<Book>>
+   * @return Call<List<Review>>
    */
   
   @GET("books/{id}/reviews")
-  Call<List<Book>> booksIdReviewsGet(
+  Single<List<Review>> booksIdReviewsGet(
           @Path("id") String id
   );
 
@@ -33,7 +34,7 @@ public interface ReviewsApi {
    */
   
   @POST("books/{id}/reviews")
-  Call<Void> booksIdReviewsPost(
+  Single<Void> booksIdReviewsPost(
           @Body Review body
   );
 

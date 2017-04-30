@@ -26,9 +26,9 @@ public interface Repository {
 
     boolean isInDb(Book book);
 
-    List<Review> getReviewsForBook(Book book);
+    List<Review> getReviewsForBook(String bookId);
 
-    void addReviewForBook(Book book, Review review);
+    void addReview(Review review);
 
     Book getBookForId(String bookId);
 }

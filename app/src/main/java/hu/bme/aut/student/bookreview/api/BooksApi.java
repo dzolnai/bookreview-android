@@ -3,6 +3,7 @@ package hu.bme.aut.student.bookreview.api;
 import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -20,7 +21,7 @@ public interface BooksApi {
    */
   
   @GET("books")
-  Call<List<Book>> booksGet();
+  Single<List<Book>> booksGet();
     
 
   
@@ -31,7 +32,7 @@ public interface BooksApi {
    */
   
   @POST("books")
-  Call<Void> booksPost();
+  Single<Void> booksPost();
     
 
   
@@ -43,7 +44,7 @@ public interface BooksApi {
    */
   
   @GET("books/{id}")
-  Call<Book> booksIdGet(
+  Single<Book> booksIdGet(
           @Path("id") String id
   );
 
@@ -57,7 +58,7 @@ public interface BooksApi {
    */
   
   @PUT("books/{id}")
-  Call<Void> booksIdPut(
+  Single<Void> booksIdPut(
           @Path("id") String id, @Body Book body
   );
 
@@ -70,7 +71,7 @@ public interface BooksApi {
    */
   
   @DELETE("books/{id}")
-  Call<Void> booksIdDelete(
+  Single<Void> booksIdDelete(
           @Path("id") String id
   );
 

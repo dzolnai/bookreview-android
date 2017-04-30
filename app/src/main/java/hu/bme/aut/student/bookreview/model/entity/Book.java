@@ -5,6 +5,8 @@ import android.content.Context;
 import com.orm.dsl.Table;
 import com.orm.dsl.Unique;
 
+import org.parceler.Parcel;
+
 import java.util.UUID;
 
 /**
@@ -12,6 +14,7 @@ import java.util.UUID;
  * Created by Daniel Zolnai on 2017-04-07.
  */
 @Table
+@Parcel
 public class Book {
     @Unique
     protected String _id;

@@ -1,7 +1,7 @@
 package hu.bme.aut.student.bookreview.api;
 
 import hu.bme.aut.student.bookreview.model.entity.User;
-import retrofit2.Call;
+import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -18,10 +18,9 @@ public interface UsersApi {
      */
 
     @GET("user/check")
-    Call<Void> userCheckGet(
-            @Query("username") String username
+    Single<Void> userCheckGet(@Query("username") String username
     );
 
     @POST("user/register")
-    Call<Void> registerUser(@Body User user);
+    Single<Void> registerUser(@Body User user);
 }

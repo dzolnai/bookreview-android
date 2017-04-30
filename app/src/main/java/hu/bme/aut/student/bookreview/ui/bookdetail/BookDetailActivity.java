@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import javax.inject.Inject;
 
@@ -18,6 +21,9 @@ import hu.bme.aut.student.bookreview.databinding.ActivityBookDetailBinding;
 import hu.bme.aut.student.bookreview.model.entity.Book;
 import hu.bme.aut.student.bookreview.ui.adapter.ReviewAdapter;
 import hu.bme.aut.student.bookreview.ui.base.BaseActivity;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Activity which displays the book details.
@@ -26,7 +32,9 @@ import hu.bme.aut.student.bookreview.ui.base.BaseActivity;
  */
 public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> {
 
-    private static final String KEY_BOOK_ID = "key_book_id";
+    private static final String TAG = BookDetailActivity.class.getName();
+
+    private static final String KEY_BOOK = "key_book";
 
     @Inject
     protected BookDetailPresenter _presenter;
@@ -35,7 +43,7 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
 
     public static Intent newInstance(Context context, Book book) {
         Intent intent = new Intent(context, BookDetailActivity.class);
-        intent.putExtra(KEY_BOOK_ID, book.getId());
+        intent.putExtra(KEY_BOOK, Parcels.wrap(book));
         return intent;
     }
 
@@ -43,16 +51,29 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
-        String bookId = getIntent().getStringExtra(KEY_BOOK_ID);
-        _book = _presenter.getBookForId(bookId);
+        _book = Parcels.unwrap(getIntent().getParcelableExtra(KEY_BOOK));
         _initToolbar();
         _initView();
         _updateView();
+        _fetchReviews();
+    }
+
+    private void _fetchReviews() {
+        _presenter.getReviewsForBook(_book.getId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(reviews -> {
+                    ((ReviewAdapter)_binding.otherReviewsList.getAdapter()).setData(reviews);
+                    _updateView();
+                }, throwable -> Log.e(TAG, "Error fetching reviews for book!", throwable));
+
     }
 
     private void _initToolbar() {
         setSupportActionBar(_binding.toolbar);
-        setTitle(_book.getTitle());
+        if (_book != null) {
+            setTitle(_book.getTitle());
+        }
         if (getSupportActionBar() == null) {
             return;
         }
@@ -64,25 +85,24 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
     private void _initView() {
         _binding.otherReviewsList.setAdapter(new ReviewAdapter());
         _binding.otherReviewsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        _binding.bookReviewSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer rating = Math.round(_binding.userRating.getRating());
-                String comment = _binding.bookReviewComment.getText().toString();
-                _presenter.submitReview(_book, rating, comment);
-                _binding.bookReviewComment.setText("");
-                _binding.userRating.setRating(0);
-                _updateView();
-            }
+        _binding.bookReviewSubmitButton.setOnClickListener(v -> {
+            Integer rating = Math.round(_binding.userRating.getRating());
+            String comment = _binding.bookReviewComment.getText().toString();
+            _presenter.submitReview(_book, rating, comment);
+            _binding.bookReviewComment.setText("");
+            _binding.userRating.setRating(0);
+            _fetchReviews();
         });
     }
 
     private void _updateView() {
+        if (_book == null) {
+            return;
+        }
         _binding.bookAuthor.setText(_book.getAuthor());
         _binding.bookTitle.setText(_book.getTitle());
         _binding.bookPublished.setText(getString(R.string.book_published_at, _book.getPublishYear()));
         Picasso.with(this).load(_book.getImageUrl()).into(_binding.bookCover);
-        ((ReviewAdapter)_binding.otherReviewsList.getAdapter()).setData(_presenter.getReviewsForBook(_book));
     }
 
     @Override
