@@ -33,6 +33,30 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /user/register:
+    post:
+      summary: Registers a username
+      description: >
+        Sends the requested username to the backend to check if a username is
+        already in use.
+      tags:
+        - Users
+      parameters:
+        - in: body
+          name: body
+          description: The username to be registered.
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: The username was registered
+        '409':
+          description: The username is already in use by someone else
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /books:
     get:
       summary: Get a list of all books
@@ -183,6 +207,12 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 definitions:
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+        description: The username to register.
   Book:
     type: object
     properties:

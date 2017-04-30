@@ -17,7 +17,7 @@ import hu.bme.aut.student.bookreview.util.ItemClickListener;
  */
 public class ReviewViewHolder extends BaseViewHolder<ItemReviewBinding> {
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY.MM.dd.", Locale.US);
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd.", Locale.US);
 
     public ReviewViewHolder(View itemView) {
         super(itemView);

@@ -26,24 +26,34 @@ android {
 
 def supportLibVersion = "25.3.1"
 def daggerVersion = "2.10"
-def butterknifeVersion = "8.5.1"
+def okHttpVersion = "3.7.0"
+def retrofitVersion = "2.2.0"
+def gsonVersion = "2.8.0"
+def oltuVersion = "1.0.2"
 
 dependencies {
+    // UI widgets
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
     compile "com.android.support:cardview-v7:${supportLibVersion}"
     compile "com.android.support:palette-v7:${supportLibVersion}"
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
 
+    // DI
     compile "com.google.dagger:dagger:${daggerVersion}"
     compile "com.google.dagger:dagger-android:${daggerVersion}"
     annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
     annotationProcessor "com.google.dagger:dagger-android-processor:${daggerVersion}"
 
-    compile "com.jakewharton:butterknife:${butterknifeVersion}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
-
+    // ORM
     compile 'com.github.satyan:sugar:1.5'
 
+    // Image loader
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Network
+    compile "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
 }
