@@ -8,9 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -24,7 +25,6 @@ import hu.bme.aut.student.bookreview.ui.adapter.BookAdapter;
 import hu.bme.aut.student.bookreview.ui.addbook.AddBookActivity;
 import hu.bme.aut.student.bookreview.ui.base.BaseActivity;
 import hu.bme.aut.student.bookreview.util.GridSpacingItemDecoration;
-import hu.bme.aut.student.bookreview.util.ItemClickListener;
 
 /**
  * Activity which displays the list of books.
@@ -32,8 +32,12 @@ import hu.bme.aut.student.bookreview.util.ItemClickListener;
  */
 public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements HomeScreen, SearchView.OnQueryTextListener {
 
+    private static final String TAG = HomeActivity.class.getName();
+
     @Inject
     protected HomePresenter _presenter;
+
+    private List<Book> _books;
 
     @Override
     protected int getLayoutRes() {
@@ -60,22 +64,18 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements H
         _binding.list.setAdapter(adapter);
         _binding.list.setLayoutManager(new GridLayoutManager(this, 2));
         _binding.list.addItemDecoration(new GridSpacingItemDecoration(2, 16, true));
-        adapter.setItemClickListener(new ItemClickListener<Book>() {
-            @Override
-            public void onItemClicked(Book item) {
-                _presenter.openBookDetailScreen(HomeActivity.this, item);
-            }
-        });
-        _binding.addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddBookPage();
-            }
-        });
+        adapter.setItemClickListener(item -> _presenter.openBookDetailScreen(HomeActivity.this, item));
+        _binding.addBookButton.setOnClickListener(view -> openAddBookPage());
     }
 
     public void _updateView() {
-        ((BookAdapter)_binding.list.getAdapter()).setData(_presenter.getAllBooks());
+        _presenter.getAllBooks().subscribe(books -> {
+            ((BookAdapter)_binding.list.getAdapter()).setData(books);
+            _books = books;
+        }, throwable -> {
+            Toast.makeText(HomeActivity.this, "Unable to fetch list of books!", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Error fetching list of books", throwable);
+        });
     }
 
     @Override
@@ -107,7 +107,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements H
         inflater.inflate(R.menu.main_menu, menu);
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.options_menu_main_search));
+        SearchView searchView = (SearchView)MenuItemCompat.getActionView(menu.findItem(R.id.options_menu_main_search));
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by defaultreturn true;
@@ -122,6 +122,9 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements H
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return _presenter.search(newText);
+        if (_books != null) {
+            _presenter.search(_books, newText);
+        }
+        return false;
     }
 }

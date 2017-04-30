@@ -63,22 +63,22 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public List<Review> getReviewsForBook(Book book) {
-        if (!_reviews.containsKey(book.getId())) {
+    public List<Review> getReviewsForBook(String bookId) {
+        if (!_reviews.containsKey(bookId)) {
             return new ArrayList<>();
         } else {
-            return _reviews.get(book.getId());
+            return _reviews.get(bookId);
         }
     }
 
     @Override
-    public void addReviewForBook(Book book, Review review) {
-        if (_reviews.containsKey(book.getId())) {
-            _reviews.get(book.getId()).add(review);
+    public void addReview(Review review) {
+        if (_reviews.containsKey(review.getBookId())) {
+            _reviews.get(review.getBookId()).add(review);
         } else {
             List<Review> bookReviews = new ArrayList<>();
             bookReviews.add(review);
-            _reviews.put(book.getId(), bookReviews);
+            _reviews.put(review.getBookId(), bookReviews);
         }
     }
 

@@ -1,7 +1,12 @@
 package hu.bme.aut.student.bookreview.ui.firststart;
 
+import hu.bme.aut.student.bookreview.api.UsersApi;
+import hu.bme.aut.student.bookreview.model.entity.User;
 import hu.bme.aut.student.bookreview.model.service.SettingsService;
 import hu.bme.aut.student.bookreview.ui.base.Presenter;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Presenter for the @{#link {@link FirstStartActivity}.
@@ -11,9 +16,11 @@ import hu.bme.aut.student.bookreview.ui.base.Presenter;
 public class FirstStartPresenter extends Presenter<FirstStartScreen> {
 
     private SettingsService _settingsService;
+    private UsersApi _usersApi;
 
-    public FirstStartPresenter(SettingsService settingsService) {
+    public FirstStartPresenter(SettingsService settingsService, UsersApi usersApi) {
         _settingsService = settingsService;
+        _usersApi = usersApi;
     }
 
     @Override
@@ -28,5 +35,17 @@ public class FirstStartPresenter extends Presenter<FirstStartScreen> {
 
     public void saveUsername(String username) {
         _settingsService.setUsername(username);
+    }
+
+    public Single<Void> checkUsername(String username) {
+        return _usersApi.userCheckGet(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Void> registerUsername(String username) {
+        return _usersApi.registerUser(new User(username))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

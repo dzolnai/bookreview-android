@@ -3,11 +3,9 @@ package hu.bme.aut.student.bookreview.ui.firststart;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.EditText;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import hu.bme.aut.student.bookreview.R;
 
 /**
@@ -16,8 +14,7 @@ import hu.bme.aut.student.bookreview.R;
  */
 public class UsernameInputDialog extends Dialog {
 
-    @BindView(R.id.dialog_username_input_username)
-    protected EditText _usernameInput;
+    private EditText _usernameInput;
 
     private UsernameInputListener _listener;
 
@@ -28,13 +25,16 @@ public class UsernameInputDialog extends Dialog {
     public UsernameInputDialog(@NonNull Context context, @NonNull UsernameInputListener listener) {
         super(context, R.style.Theme_AppCompat_Dialog);
         _listener = listener;
+        setCancelable(false);
+        setCanceledOnTouchOutside(false);
         setContentView(R.layout.dialog_username_input);
-        ButterKnife.bind(this);
-    }
-
-    @OnClick(R.id.dialog_username_button_start)
-    protected void _onStartButtonClicked() {
-        String username = _usernameInput.getText().toString();
-        _listener.onUsernameSelected(UsernameInputDialog.this, username);
+        _usernameInput = (EditText)findViewById(R.id.dialog_username_input_username);
+        findViewById(R.id.dialog_username_button_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = _usernameInput.getText().toString();
+                _listener.onUsernameSelected(UsernameInputDialog.this, username);
+            }
+        });
     }
 }
