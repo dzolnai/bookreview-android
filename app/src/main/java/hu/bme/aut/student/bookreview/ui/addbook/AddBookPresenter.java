@@ -2,9 +2,10 @@ package hu.bme.aut.student.bookreview.ui.addbook;
 
 import android.widget.EditText;
 
+import hu.bme.aut.student.bookreview.api.BooksApi;
 import hu.bme.aut.student.bookreview.model.entity.Book;
-import hu.bme.aut.student.bookreview.model.repository.Repository;
 import hu.bme.aut.student.bookreview.ui.base.Presenter;
+import io.reactivex.functions.Consumer;
 
 /**
  * Presenter for the add book page.
@@ -13,16 +14,17 @@ import hu.bme.aut.student.bookreview.ui.base.Presenter;
  */
 public class AddBookPresenter extends Presenter<AddBookScreen> {
 
-    private Repository _repository;
+    private BooksApi _booksApi;
 
-    public AddBookPresenter(Repository repository) {
-        _repository = repository;
+    public AddBookPresenter(BooksApi booksApi) {
+        _booksApi = booksApi;
     }
 
     public void saveBook(Book book) {
-        _repository.saveBook(book);
-        _screen.displayToast("Book saved.");
-        _screen.navigateBack();
+        _booksApi.booksPost(book).subscribe(() -> {
+            _screen.displayToast("Book saved.");
+            _screen.navigateBack();
+        }, throwable -> _screen.displayToast("Unable to save book."));
     }
 
     public boolean validate(EditText titleText,

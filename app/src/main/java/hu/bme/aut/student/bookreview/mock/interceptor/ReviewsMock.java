@@ -35,11 +35,8 @@ public class ReviewsMock {
                 responseString = GsonHelper.getGson().toJson(_repository.getReviewsForBook(bookId));
                 responseCode = 200;
             } else if (uri.getPath().endsWith("/reviews") && request.method().equalsIgnoreCase("POST")) {
-                String bookId = uri.getPathSegments().get(uri.getPathSegments().size() - 2);
                 final Buffer buffer = new Buffer();
-
                 request.body().writeTo(buffer);
-
                 String body = buffer.readUtf8();
                 Review newReview = GsonHelper.getGson().fromJson(body, Review.class);
                 _repository.addReview(newReview);

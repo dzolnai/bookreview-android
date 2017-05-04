@@ -37,7 +37,7 @@ public class PresenterModule {
     }
 
     @Provides
-    /* package */ AddBookPresenter provideAddBookPresenter(Repository repository) {
-        return new AddBookPresenter(repository);
+    /* package */ AddBookPresenter provideAddBookPresenter(BooksApi booksApi) {
+        return new AddBookPresenter(booksApi);
     }
 }

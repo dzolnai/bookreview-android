@@ -6,6 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import hu.bme.aut.student.bookreview.model.repository.MemoryRepository;
 import hu.bme.aut.student.bookreview.model.repository.Repository;
+import hu.bme.aut.student.bookreview.model.repository.SugarOrmRepository;
 
 /**
  * Module which provides the services.
@@ -18,6 +19,6 @@ public class RepositoryModule {
     @Provides
     @Singleton
     /* package */ Repository provideRepository() {
-        return new MemoryRepository();
+        return new SugarOrmRepository();
     }
 }

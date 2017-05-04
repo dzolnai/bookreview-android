@@ -3,6 +3,7 @@ package hu.bme.aut.student.bookreview.api;
 import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,7 +33,7 @@ public interface BooksApi {
    */
   
   @POST("books")
-  Single<Void> booksPost();
+  Completable booksPost(@Body Book book);
     
 
   
@@ -58,7 +59,7 @@ public interface BooksApi {
    */
   
   @PUT("books/{id}")
-  Single<Void> booksIdPut(
+  Completable booksIdPut(
           @Path("id") String id, @Body Book body
   );
 
@@ -71,7 +72,7 @@ public interface BooksApi {
    */
   
   @DELETE("books/{id}")
-  Single<Void> booksIdDelete(
+  Completable booksIdDelete(
           @Path("id") String id
   );
 

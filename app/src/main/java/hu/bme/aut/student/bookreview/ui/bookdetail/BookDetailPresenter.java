@@ -34,11 +34,11 @@ public class BookDetailPresenter extends Presenter<BookDetailScreen> {
         return _reviewsApi.booksIdReviewsGet(bookId);
     }
 
-    public void addReviewForBook(Review review) {
+    private void addReviewForBook(Review review) {
         _reviewsApi.booksIdReviewsPost(review)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(aVoid -> Log.i(TAG, "Successfully posted review for book."), throwable -> Log.e(TAG, "Error posting review for book!", throwable));
+                .subscribe(() -> Log.i(TAG, "Successfully posted review for book."), throwable -> Log.e(TAG, "Error posting review for book!", throwable));
     }
 
     public void submitReview(Book book, Integer rating, String comment) {

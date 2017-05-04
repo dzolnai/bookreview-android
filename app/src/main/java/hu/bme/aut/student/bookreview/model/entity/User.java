@@ -10,4 +10,8 @@ public class User {
     public User(String username) {
         _username = username;
     }
+
+    public String getUsername() {
+        return _username;
+    }
 }
