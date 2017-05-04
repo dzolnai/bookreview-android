@@ -4,6 +4,7 @@ import hu.bme.aut.student.bookreview.api.UsersApi;
 import hu.bme.aut.student.bookreview.model.entity.User;
 import hu.bme.aut.student.bookreview.model.service.SettingsService;
 import hu.bme.aut.student.bookreview.ui.base.Presenter;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -37,13 +38,13 @@ public class FirstStartPresenter extends Presenter<FirstStartScreen> {
         _settingsService.setUsername(username);
     }
 
-    public Single<Void> checkUsername(String username) {
+    public Completable checkUsername(String username) {
         return _usersApi.userCheckGet(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Void> registerUsername(String username) {
+    public Completable registerUsername(String username) {
         return _usersApi.registerUser(new User(username))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

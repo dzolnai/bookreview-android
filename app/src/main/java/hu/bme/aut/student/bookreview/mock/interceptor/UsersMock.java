@@ -29,10 +29,10 @@ public class UsersMock {
 		Headers headers = request.headers();
 
 
-		if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "users/register") && request.method().equalsIgnoreCase("POST")) {
+		if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "user/register") && request.method().equalsIgnoreCase("POST")) {
 			responseString = "";
 			responseCode = 200;
-		}else if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "users/check") && request.method().equalsIgnoreCase("GET")) {
+		}else if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "user/check") && request.method().equalsIgnoreCase("GET")) {
 			responseString = "";
 			responseCode = 200;
 		} else {

@@ -64,7 +64,7 @@ public class FirstStartActivity extends BaseActivity<ActivityFirstStartBinding> 
         progressDialog.setMessage("Checking if username is available...");
         progressDialog.show();
         _presenter.checkUsername(username)
-                .subscribe(aVoid -> {
+                .subscribe(() -> {
                     progressDialog.setTitle("Registering...");
                     progressDialog.setMessage("Requesting username...");
                     _registerUsername(username, progressDialog);
@@ -77,7 +77,7 @@ public class FirstStartActivity extends BaseActivity<ActivityFirstStartBinding> 
 
     private void _registerUsername(String username, ProgressDialog progressDialog) {
         _presenter.registerUsername(username)
-                .subscribe(aVoid -> {
+                .subscribe(() -> {
                     progressDialog.dismiss();
                     _presenter.saveUsername(username);
                     continueToHomeScreen();

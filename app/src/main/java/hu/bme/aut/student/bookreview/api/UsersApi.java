@@ -1,6 +1,7 @@
 package hu.bme.aut.student.bookreview.api;
 
 import hu.bme.aut.student.bookreview.model.entity.User;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,9 +19,9 @@ public interface UsersApi {
      */
 
     @GET("user/check")
-    Single<Void> userCheckGet(@Query("username") String username
+    Completable userCheckGet(@Query("username") String username
     );
 
     @POST("user/register")
-    Single<Void> registerUser(@Body User user);
+    Completable registerUser(@Body User user);
 }

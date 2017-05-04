@@ -4,6 +4,7 @@ import java.util.List;
 
 import hu.bme.aut.student.bookreview.model.entity.Book;
 import hu.bme.aut.student.bookreview.model.entity.Review;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -34,7 +35,7 @@ public interface ReviewsApi {
    */
   
   @POST("books/{id}/reviews")
-  Single<Void> booksIdReviewsPost(
+  Completable booksIdReviewsPost(
           @Body Review body
   );
 

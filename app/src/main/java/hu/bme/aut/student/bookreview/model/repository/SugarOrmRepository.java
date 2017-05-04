@@ -62,7 +62,7 @@ public class SugarOrmRepository implements Repository {
 
     @Override
     public List<Review> getReviewsForBook(String bookId) {
-        return SugarRecord.find(Review.class, "_bookId = ?", bookId);
+         return SugarRecord.find(Review.class, "_book_Id = ?", bookId);
     }
 
     @Override

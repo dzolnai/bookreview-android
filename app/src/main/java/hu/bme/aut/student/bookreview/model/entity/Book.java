@@ -23,7 +23,7 @@ public class Book {
     protected Integer _publishYear;
     protected String _imageUrl;
 
-    protected Book() {
+    public Book() {
         // Used by ORM.
     }
 

@@ -1,18 +1,26 @@
 package hu.bme.aut.student.bookreview.model.entity;
 
+import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
+
 import java.util.Date;
 
 /**
  * The entity of a review, which is made by a user, and for a given book.
- *
+ * <p>
  * Created by Daniel Zolnai on 2017-04-16.
  */
+@Table
 public class Review {
-    private String _username;
-    private String _bookId;
-    private Date _publishedAt;
-    private Integer _rating;
-    private String _comment;
+    protected String _username;
+    protected String _bookId;
+    protected Date _publishedAt;
+    protected Integer _rating;
+    protected String _comment;
+
+    public Review() {
+        // Used by oRM.
+    }
 
     public Review(String username, String bookId, Integer rating, String comment) {
         _username = username;
