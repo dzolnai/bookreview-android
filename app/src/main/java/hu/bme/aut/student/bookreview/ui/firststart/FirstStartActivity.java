@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
@@ -22,6 +25,9 @@ public class FirstStartActivity extends BaseActivity<ActivityFirstStartBinding> 
     @Inject
     protected FirstStartPresenter _presenter;
 
+    @Inject
+    protected Tracker _tracker;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_first_start;
@@ -31,6 +37,13 @@ public class FirstStartActivity extends BaseActivity<ActivityFirstStartBinding> 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        _tracker.setScreenName("First start");
+        _tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -39,6 +41,9 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
     @Inject
     protected BookDetailPresenter _presenter;
 
+    @Inject
+    protected Tracker _tracker;
+
     private Book _book;
 
     public static Intent newInstance(Context context, Book book) {
@@ -56,6 +61,13 @@ public class BookDetailActivity extends BaseActivity<ActivityBookDetailBinding> 
         _initView();
         _updateView();
         _fetchReviews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        _tracker.setScreenName("Book detail");
+        _tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void _fetchReviews() {

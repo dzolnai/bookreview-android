@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="hu.bme.aut.student.bookreview">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET"/> 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <application
         android:name=".BookReviewApplication"
@@ -32,6 +34,10 @@
         <activity android:name=".ui.bookdetail.BookDetailActivity"/>
 
         <activity android:name=".ui.addbook.AddBookActivity"/>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="35866bd8c2cc1e31a99b90126e69998d828f5fd3"/>
     </application>
 
 </manifest>
