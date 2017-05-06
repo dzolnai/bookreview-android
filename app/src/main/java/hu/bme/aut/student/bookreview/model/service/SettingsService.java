@@ -1,11 +1,12 @@
 package hu.bme.aut.student.bookreview.model.service;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
  * Settings which remembers and serves the settings of the current user.
- *
+ * <p>
  * Created by Daniel Zolnai on 2017-03-24.
  */
 public class SettingsService {
@@ -21,6 +22,11 @@ public class SettingsService {
     public SettingsService(Context context) {
         _applicationContext = context.getApplicationContext();
         _load();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public static void reset(Context context) {
+        context.getSharedPreferences(KEY_SETTINGS_PREFERENCES, Context.MODE_PRIVATE).edit().clear().commit();
     }
 
     private void _save() {

@@ -3,6 +3,8 @@ package hu.bme.aut.student.bookreview;
 import android.app.Activity;
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
@@ -30,6 +32,7 @@ public class BookReviewApplication extends Application implements HasDispatching
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         _applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();

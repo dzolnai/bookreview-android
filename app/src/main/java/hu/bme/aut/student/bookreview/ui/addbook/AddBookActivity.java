@@ -6,6 +6,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
@@ -24,6 +27,9 @@ public class AddBookActivity extends BaseActivity<ActivityAddBookBinding> implem
     @Inject
     protected AddBookPresenter _presenter;
 
+    @Inject
+    protected Tracker _tracker;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_add_book;
@@ -35,6 +41,13 @@ public class AddBookActivity extends BaseActivity<ActivityAddBookBinding> implem
         AndroidInjection.inject(this);
         _initToolbar();
         _initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        _tracker.setScreenName("Add book");
+        _tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void _initToolbar() {

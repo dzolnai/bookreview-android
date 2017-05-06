@@ -13,6 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,6 +40,9 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements H
     @Inject
     protected HomePresenter _presenter;
 
+    @Inject
+    protected Tracker _tracker;
+
     private List<Book> _books;
 
     @Override
@@ -57,6 +63,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding> implements H
     protected void onResume() {
         super.onResume();
         _updateView();
+        _tracker.setScreenName("Home");
+        _tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     public void _initView() {

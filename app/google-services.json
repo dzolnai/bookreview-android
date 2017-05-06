@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "210589210878",
+    "project_id": "api-project-210589210878"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210589210878:android:2c6d4b979ff9866b",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.student.bookreview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnYaCfrcOJmOldJ3Ue0Vxa0dj85f9TseA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-98614375-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
